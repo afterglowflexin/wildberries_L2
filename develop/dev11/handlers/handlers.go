@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/afterglowflexin/wildberries_L2/develop/dev11/data"
+	"dev11/data"
 )
 
 type CalendarHandler struct {
@@ -11,6 +11,39 @@ type CalendarHandler struct {
 
 func (h CalendarHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
+}
+
+func (h CalendarHandler) ListForDay(w http.ResponseWriter, r *http.Request) {
+
+	event, err := data.GetEvent()
+
+	if err != nil {
+
+	}
+
+	data.ToJSON(event, w)
+}
+
+func (h CalendarHandler) ListForWeek(w http.ResponseWriter, r *http.Request) {
+
+	event, err := data.GetEvent()
+
+	if err != nil {
+
+	}
+
+	data.ToJSON(event, w)
+}
+
+func (h CalendarHandler) ListForMonth(w http.ResponseWriter, r *http.Request) {
+
+	event, err := data.GetEvent()
+
+	if err != nil {
+
+	}
+
+	data.ToJSON(event, w)
 }
 
 func (h CalendarHandler) CreateEvent(w http.ResponseWriter, r *http.Request) {

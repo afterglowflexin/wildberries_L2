@@ -4,8 +4,9 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"os/signal"
 
-	"github.com/afterglowflexin/wildberries_L2/develop/dev11/handlers"
+	"dev11/handlers"
 )
 
 /*
@@ -30,19 +31,19 @@ import (
 
 func main() {
 
-	l := log.New(os.Stdout, "", log.LstdFlags)
+	//l := log.New(os.Stdout, "", log.LstdFlags)
 	logErr := log.New(os.Stderr, "", log.LstdFlags)
 
 	sm := http.ServeMux{}
 
-	ch := handlers.CalendarHandler
+	ch := handlers.CalendarHandler{}
 
-	sm.Handle("/create-event")
-	sm.Handle("/update_event")
-	sm.Handle("/delete_event")
-	sm.Handle("/events_for_day")
-	sm.Handle("/events_for_week")
-	sm.Handle("/events_for_month")
+	sm.HandleFunc("/create-event", ch.CreateEvent)
+	sm.HandleFunc("/update_event", ch.UpdateEvent)
+	sm.HandleFunc("/delete_event", ch.DeleteEvent)
+	sm.HandleFunc("/events_for_day", ch.ListForDay)
+	sm.HandleFunc("/events_for_week", ch.ListForWeek)
+	sm.HandleFunc("/events_for_month", ch.ListForMonth)
 
 	s := http.Server{}
 
@@ -51,4 +52,8 @@ func main() {
 		logErr.Panic(err)
 	}
 
+	sigChan := make(chan os.Signal)
+	signal.Notify(sigChan, os.Interrupt, os.Kill)
+
+	<-sigChan
 }

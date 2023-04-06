@@ -1,3 +1,3 @@
-module github.com/afterglowflexin/wildberries_L2/develop/dev11
+module dev11
 
 go 1.19

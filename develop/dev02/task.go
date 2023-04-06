@@ -42,7 +42,7 @@ func Unpack(s string) (string, error) {
 		if unicode.IsNumber(curRune) {
 
 			if !(unicode.IsLetter(prevRune)) {
-				return "", errors.New("Invalid string")
+				return "", errors.New("invalid string")
 			}
 
 			n, err := strconv.Atoi(string(curRune))

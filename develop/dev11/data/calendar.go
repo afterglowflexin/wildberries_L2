@@ -9,26 +9,25 @@ type Event struct {
 }
 
 type Calendar struct {
-	events []Event
+	events map[time.Time][]Event
 }
 
 var calendar = Calendar{
-	[]Event{},
+	map[time.Time][]Event{},
 }
 
-func GetEvent(date time.Time) (Event, error) {
-	return Event{}, nil
+func GetEvent(date time.Time) ([]Event, error) {
+	return calendar.events[date], nil
 }
 
 func CreateEvent(event Event) error {
-	calendar.events = append(calendar.events, event)
+	calendar.events[event.date] = append(calendar.events[event.date], event)
 	return nil
 }
 
 func UpdateEvent(event Event) error {
-	var id int
 
-	calendar.events[id] = event
+	calendar.events[event.date][0] = event
 
 	return nil
 }

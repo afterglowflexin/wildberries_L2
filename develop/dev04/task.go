@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"sort"
+	"strings"
 )
 
 /*
@@ -27,17 +28,17 @@ func main() {
 	fmt.Println(SearchAnagram(&words))
 }
 
-func SearchAnagram(words *[]string) map[string][]string {
+func SearchAnagram(words *[]string) *map[string][]string {
 
 	result := make(map[string][]string)
 
 	helper := make(map[string][]int)
 
-	for i, x := range *words {
+	for i := range *words {
 
-		//x = strings.ToLower(x)
+		(*words)[i] = strings.ToLower((*words)[i])
 
-		slice := []rune(x)
+		slice := []rune((*words)[i])
 
 		sort.Slice(slice, func(i, j int) bool {
 			return slice[i] < slice[j]
@@ -54,9 +55,7 @@ func SearchAnagram(words *[]string) map[string][]string {
 
 			for _, y := range x {
 
-				first := (*words)[x[0]]
-
-				result[first] = append(result[first], (*words)[y])
+				result[(*words)[x[0]]] = append(result[(*words)[x[0]]], (*words)[y])
 			}
 		}
 	}
@@ -65,5 +64,5 @@ func SearchAnagram(words *[]string) map[string][]string {
 		sort.Strings(x)
 	}
 
-	return result
+	return &result
 }
